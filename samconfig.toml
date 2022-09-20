@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "rds-proxy-test"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1ovg6ty1oc66b"
+s3_prefix = "rds-proxy-test"
+region = "us-east-2"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

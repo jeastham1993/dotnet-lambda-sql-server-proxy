@@ -3,6 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{12C6D4D8-DAF7-4A4F-BCCC-E1FBDB855CCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetSqlRdsProxy.Core", "src\DotnetSqlRdsProxy.Core\DotnetSqlRdsProxy.Core.csproj", "{F0DF6F81-1F83-48B7-8F5F-2D358A957C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetSqlRdsProxy.Infrastructure", "src\DotnetSqlRdsProxy.Infrastructure\DotnetSqlRdsProxy.Infrastructure.csproj", "{BA763614-48ED-447F-ABCA-A2138BC0FC46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetSqlRdsProxy.Api", "src\DotnetSqlRdsProxy.Api\DotnetSqlRdsProxy.Api.csproj", "{21887DD1-1647-45B7-B45A-408BF462F5D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{58E577A3-6365-46E8-9900-570B7073D323}"
+	ProjectSection(SolutionItems) = preProject
+		template.yaml = template.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,5 +23,24 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0DF6F81-1F83-48B7-8F5F-2D358A957C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0DF6F81-1F83-48B7-8F5F-2D358A957C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0DF6F81-1F83-48B7-8F5F-2D358A957C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0DF6F81-1F83-48B7-8F5F-2D358A957C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA763614-48ED-447F-ABCA-A2138BC0FC46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA763614-48ED-447F-ABCA-A2138BC0FC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA763614-48ED-447F-ABCA-A2138BC0FC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA763614-48ED-447F-ABCA-A2138BC0FC46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21887DD1-1647-45B7-B45A-408BF462F5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21887DD1-1647-45B7-B45A-408BF462F5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21887DD1-1647-45B7-B45A-408BF462F5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21887DD1-1647-45B7-B45A-408BF462F5D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F0DF6F81-1F83-48B7-8F5F-2D358A957C25} = {12C6D4D8-DAF7-4A4F-BCCC-E1FBDB855CCB}
+		{BA763614-48ED-447F-ABCA-A2138BC0FC46} = {12C6D4D8-DAF7-4A4F-BCCC-E1FBDB855CCB}
+		{21887DD1-1647-45B7-B45A-408BF462F5D0} = {12C6D4D8-DAF7-4A4F-BCCC-E1FBDB855CCB}
 	EndGlobalSection
 EndGlobal

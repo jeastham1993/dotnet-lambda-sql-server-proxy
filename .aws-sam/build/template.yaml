@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    MemorySize: 1024
+    Architectures:
+    - arm64
+    Runtime: dotnet6
+    Timeout: 30
+    Tracing: Active
+    VpcConfig:
+      SecurityGroupIds:
+      - sg-0e955a6bd08ed5b74
+      SubnetIds:
+      - subnet-0825d84de8945a379
+      - subnet-003735aad341ef093
+      - subnet-09bd52f02019b5e1f
+Resources:
+  MinimalGetProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: MinimalGetProductsFunction
+      Handler: DotnetSqlRdsProxy.Api
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ALL
+      Policies:
+      - AWSSecretsManagerGetSecretValuePolicy:
+          SecretArn: arn:aws:secretsmanager:us-east-2:521936459218:secret:test/product-db-G1l1Jj
+    Metadata:
+      SamResourceId: MinimalGetProductsFunction
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value:
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/
