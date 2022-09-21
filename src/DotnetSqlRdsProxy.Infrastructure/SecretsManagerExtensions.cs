@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Amazon;
+using Amazon.Runtime;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,12 +11,11 @@ public static class SecretsManagerExtensions
 {
     public static IServiceCollection AddSecretsManagerSecrets(this IServiceCollection services)
     {
-        Console.WriteLine("Attempting to retrieve secrets");
-        
         var secretName = Environment.GetEnvironmentVariable("SECRET_NAME") ?? "test/proxy-db";
-        var region = "us-east-2";
+        
+        Console.WriteLine($"Attempting to retrieve secret named {secretName}");
 
-        var client = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
+        var client = new AmazonSecretsManagerClient(new EnvironmentVariablesAWSCredentials());
 
         GetSecretValueRequest request = new GetSecretValueRequest();
         request.SecretId = secretName;
@@ -28,6 +28,8 @@ public static class SecretsManagerExtensions
         Console.WriteLine("Request complete");
 
         var parsedConnString = JsonSerializer.Deserialize<SecretManagerConnectionString>(connString.SecretString);
+
+        Console.WriteLine(parsedConnString.ToString());
 
         Environment.SetEnvironmentVariable("SQL_CONNECTION_STRING", parsedConnString.ToString());
 
@@ -47,6 +49,6 @@ record SecretManagerConnectionString
 
     public override string ToString()
     {
-        return $"Server={host};Database={host};User Id={username};Password={password};";
+        return $"Server={host};Database={dbname};User Id={username};Password={password};";
     }
 }
