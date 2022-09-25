@@ -35,6 +35,7 @@ namespace Infrastructure
                 DeleteAutomatedBackups = true,
                 DeletionProtection = false,
                 PubliclyAccessible = true,
+                IamAuthentication = true
             });
 
             database.Connections.AllowFromAnyIpv4(Port.Tcp(1433));

@@ -1,4 +1,5 @@
-﻿using DotnetSqlRdsProxy.Core.Models;
+﻿using System.Data.Common;
+using DotnetSqlRdsProxy.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotnetSqlRdsProxy.Infrastructure;
@@ -8,7 +9,6 @@ public class ProductDbContext : DbContext
     public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
     {
     }
-
     public DbSet<Product> Product { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

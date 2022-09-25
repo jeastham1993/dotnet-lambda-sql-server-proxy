@@ -19,9 +19,9 @@ Parameters:
   LambdaSecurityGroupIds:
     Type: List<AWS::EC2::SecurityGroup::Id>
     Description: The security groups to assign to the Lambda function
-  SecretArn:
+  ProxyArn:
     Type: String
-    Description: The name of the secret holding database credentials
+    Description: The ARN of the RDS Proxy to allow permissions to
 
 Resources:
   MinimalGetProductsFunction:
@@ -31,7 +31,9 @@ Resources:
       Handler: DotnetSqlRdsProxy.Api
       Environment:
         Variables:
-          SECRET_NAME: !Ref SecretArn
+          DB_HOST: product-db-proxy.proxy-cojpavfhis28.us-east-2.rds.amazonaws.com
+          DB_USER: admin
+          DB_NAME: product-db-proxy.proxy-cojpavfhis28.us-east-2.rds.amazonaws.com
       Events:
         Api:
           Type: HttpApi
@@ -40,21 +42,11 @@ Resources:
             Method: ALL
       Policies:
         - Statement:
-            - Sid: GetSpecificSecret
+            - Sid: AllowRDSProxy
               Effect: Allow
               Action:
-                - secretsmanager:GetResourcePolicy
-                - secretsmanager:GetSecretValue
-                - secretsmanager:DescribeSecret
-                - secretsmanager:ListSecretVersionIds
-              Resource: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:*
-            - Sid: ListSecrets
-              Effect: Allow
-              Action:
-                - secretsmanager:ListSecrets
-              Resource: '*'
-          
-            
+                - rds-db:connect
+              Resource: !Ref ProxyArn
 Outputs:
   ApiUrl:
     Description: "API Gateway endpoint URL"

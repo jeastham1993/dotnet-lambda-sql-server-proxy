@@ -1,5 +1,8 @@
-﻿using DotnetSqlRdsProxy.Core.Models;
+﻿using Amazon.RDS;
+using DotnetSqlRdsProxy.Core.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DotnetSqlRdsProxy.Infrastructure;
 
@@ -11,7 +14,7 @@ public class SqlProductRepository : IProductRepository
     {
         _context = context;
     }
-    
+
     public async Task Add(Product product)
     {
         await this._context.Product.AddAsync(product);
