@@ -47,14 +47,14 @@ At this moment in time, CloudFormation does not support Proxies for SQL Server. 
     - Engine family - SQL Server
     - Proxy identifier - A name of your choice
     - Require Transport Level Security - true (required for IAM auth)
-    - Database - Select the RDS instance, it will be named *infrastructurestack-productsdb*
+    - Database - Select the RDS instance, it will be named *infrastructurestack-productsdb-**
     - Secrets manager secrets - Select the created secret, it's name will contain *infrastructurestack*
     - Create a new IAM Role
     - IAM authentication - Allowed
-    - Subnets - Select the two private subnets
-    - VPC security group - Select the security group named **rds-ms-sql**
-5. Wait for the RDS proxy to deploy
-6. Copy the Proxy ARN
+    - Subnets - Select the two subnets the RDS instance has been deployed into. *To find this information navigate to the RDS home page, go to databases and select the database that contains the name infrastructurestack-productsdb. In connectivity tab you will see the subnet ids*.
+    - VPC security group - Select the security group that contains **InfrastructureStack-productssb**
+5. Wait for the RDS proxy to deploy, this may take a few minutes
+6. Note down the Proxy ARN and the proxy endpoint
 
 ### Deploy function code
 
@@ -63,22 +63,22 @@ Once the RDS proxy is created, you can deploy the application code
 1. Navigate to the repo root
 2. Run **sam build**
 
-``` bash
+```bash
 sam build
 ```
-3. Run **sam deploy** passing in the parameter overrides
+3. Run **sam deploy** passing in the parameter overrides. Details for each parameter can be found in the below SAM Parameter Values section
 
-``` bash
-sam deploy --parameter-overrides ParameterKey=ProxyArn,ParameterValue={PROXY_ARN} ParameterKey=LambdaSubnetIds,ParameterValue={LAMBDA_SUBNETS} ParameterKey=LambdaSecurityGroupIds,ParameterValue={LAMBDA_SECURITYGROUP}
+```bash
+sam deploy --guided --parameter-overrides ParameterKey=ProxyArn,ParameterValue={PROXY_ARN} ParameterKey=LambdaSubnetIds,ParameterValue={LAMBDA_SUBNETS} ParameterKey=LambdaSecurityGroupIds,ParameterValue={LAMBDA_SECURITYGROUP} ParameterKey=ProxyEndpoint,ParameterValue={PROXY_ENDPOINT}
 ```
 
 ### SAM Parameter Values
 
-{PROXY_ARN} = The ARN of the RDS proxy, with a couple of changes.
+**{PROXY_ARN}** = The ARN of the RDS proxy, with a couple of changes.
 ```
 arn:aws:rds:us-east-2:521936459218:db-proxy:prx-0c7be4da751905dac
 arn:aws:rds-db:us-east-2:521936459218:dbuser:prx-0c7be4da751905dac/*
 ```
-
-{LAMBDA_SUBNETS} = The subnet Id's to deploy Lambda into. For ease, use the same subnets the RDS instance has been deployed into
-{LAMBDA_SECURITYGROUP} = The security group Id to deploy Lambda into. For ease, use the same security group the RDS instance has been deployed into
+**{PROXY_ENDPOINT}** = The endpoint of the RDS proxy
+**{LAMBDA_SUBNETS}** = The subnet Id's to deploy Lambda into. Use the **public subnets** that were deployed with the CDK stack
+**{LAMBDA_SECURITYGROUP}** = The security group Id to deploy Lambda into. For ease, use the same security group the RDS instance has been deployed into

@@ -34,8 +34,7 @@ namespace Infrastructure
                 MaxAllocatedStorage = 105,
                 DeleteAutomatedBackups = true,
                 DeletionProtection = false,
-                PubliclyAccessible = true,
-                IamAuthentication = true
+                PubliclyAccessible = false,
             });
 
             database.Connections.AllowFromAnyIpv4(Port.Tcp(1433));
